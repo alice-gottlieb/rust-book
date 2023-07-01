@@ -16,10 +16,15 @@ fn main() {
             .read_line(&mut guess)
             .expect("Should have read line from console.");
 
-        let guess: u32 = guess.trim().parse().expect("Should have parsed guess.");
+        // Continue if user input is not a number
+        let guess: u32 = match guess.trim().parse(){
+            Ok(num) => num,
+            Err(_) => continue,
+        };
 
         println!("You guessed: {guess}");
 
+        // Match guess with secret number
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too big!"),
@@ -28,8 +33,7 @@ fn main() {
                 break;
             }
         }
-
     }
-    
+
     println!("The secret number was: {secret_number}");
 }
